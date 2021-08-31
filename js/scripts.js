@@ -52,3 +52,26 @@ window.addEventListener('DOMContentLoaded', event => {
     });
 
 });
+
+document.addEventListener("DOMContentLoaded", function(){
+    let projects = document.getElementById("projectsGrid");
+    let projectsS = [].map.call(projects.children, Object).sort(function(a,b) {
+
+        a = a.children[0].getAttribute("date").split("/");
+        b = b.children[0].getAttribute("date").split("/");
+
+        let diff = a[1] - b[1];
+        if ((a[1] - b[1]) == 0){
+            diff = a[0] - b[0];
+        }
+
+        return diff > 0 ? 1 : diff < 0 ? -1 : 0;
+    });
+    
+    for (let i = projects.children.length - 1; i >= 0; i--){
+        let tempClass = projects.children[i].getAttribute("class");
+        projects.appendChild(projectsS[i]);
+        projects.children[i].setAttribute("class", tempClass);
+    }
+
+});
